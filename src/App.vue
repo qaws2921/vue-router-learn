@@ -1,32 +1,59 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="inspire">
+    <v-navigation-drawer
+      v-model="drawer"
+      fixed
+      app
+    >
+      <v-list dense>
+        <!-- <v-list-tile @click="$router.push({name: 'home'})"> -->
+          <v-list-tile router :to="{name: 'home'}" exact>
+          <v-list-tile-action>
+            <i class="fas fa-home"></i>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Home</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <!-- <v-list-tile @click="$router.push({name: 'about'})"> -->
+        <!-- <v-list-tile @click="$router.push({path: '/about'})"> -->
+        <v-list-tile router :to="{name: 'about'}" exact>
+          <v-list-tile-action>
+            <i class="fas fa-user"></i>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>About</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar color="indigo" dark fixed app>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>Application</v-toolbar-title>
+    </v-toolbar>
+    <v-content>
+      <router-view>
+
+      </router-view>
+    </v-content>
+    <v-footer color="indigo" app>
+      <span class="white--text">&copy; 2017</span>
+    </v-footer>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+export default {
+  data: () => ({
+    drawer: null
+  }),
+  props: {
+    source: String
+  },
+  methods: {
+    test() {
+      alert('111');
+    }
+  }
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
