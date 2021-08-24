@@ -8,6 +8,11 @@ const About = () => {
   return import(/* webpackChunkName: "about" */ '../views/About.vue')
 }
 
+const Users = () => import(/* webpackChunkName: "users" */ '../views/Users.vue')
+const UsersDetail = () => import(/* webpackChunkName: "users-detail" */ '../views/Users-detail.vue')
+const UsersEdit = () => import(/* webpackChunkName: "users-Edit" */ '../views/Users-Edit.vue')
+
+
 const routes = [
   {
     path: '/',
@@ -17,11 +22,39 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: About
+  },
+  {
+    // path: '/users/:userId',
+    path: '/users',
+    name: 'users',
+    // beforeEnter: (to, from, next) => {
+    //   console.log('beforeEnter')
+    //   next()
+    // },
+    component: Users,
+    children:[
+      {
+        path: ":id",
+        name: 'users-detail',
+        component: UsersDetail,
+      },
+      {
+        path: ":id/edit",
+        name: 'users-edit',
+        component: UsersEdit,
+      }
+    ]
+  },
+  {
+    path: '/redirect-me',
+    redirect: {name: 'users'}
+  },
+  {
+    path: '/*',
+    redirect: {name: 'home'}
   }
+
 ]
 
 const router = new VueRouter({
